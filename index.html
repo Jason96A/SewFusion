@@ -3,8 +3,9 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#f7f5ef">
-  <meta name="description" content="SewFusion: Tailored Generation of Topology and Panel-Level Geometry for Sewing Patterns. Project page coming soon.">
+  <meta name="theme-color" content="#ffffff">
+  <meta name="description" content="SewFusion is a unified autoregressive framework for multimodal generation and editing of simulation-ready sewing patterns.">
+  <meta name="keywords" content="SewFusion, sewing pattern generation, digital garments, multimodal generation, flow matching">
   <meta name="author" content="Jiaxin Lin, Xiao Pan, Hangjie Yuan, Luyan Liang, Wan Li, Daquan Feng">
   <meta name="citation_title" content="SewFusion: Tailored Generation of Topology and Panel-Level Geometry for Sewing Patterns">
   <meta name="citation_author" content="Lin, Jiaxin">
@@ -13,49 +14,135 @@
   <meta name="citation_author" content="Liang, Luyan">
   <meta name="citation_author" content="Li, Wan">
   <meta name="citation_author" content="Feng, Daquan">
-  <meta property="og:type" content="website">
-  <meta property="og:title" content="SewFusion — Coming Soon">
-  <meta property="og:description" content="Tailored Generation of Topology and Panel-Level Geometry for Sewing Patterns. Project page coming soon.">
-  <title>SewFusion — Coming Soon</title>
+  <meta name="citation_publication_date" content="2027">
+  <meta name="citation_pdf_url" content="static/pdfs/sewfusion.pdf">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="SewFusion">
+  <meta property="og:description" content="Tailored generation of topology and panel-level geometry for sewing patterns.">
+  <title>SewFusion</title>
+  <link rel="icon" type="image/svg+xml" href="static/images/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="static/css/index.css">
 </head>
 <body>
-  <main class="page">
-    <div class="page-label" aria-label="SewFusion project page">
-      <span class="page-label-mark" aria-hidden="true"></span>
-      SewFusion
-    </div>
-    <div class="hero">
-      <div class="hero-copy">
-        <p class="eyebrow">Research project</p>
-        <h1>SewFusion</h1>
-        <p class="subtitle">Tailored Generation of Topology and Panel-Level Geometry for Sewing Patterns</p>
-        <div class="rule" aria-hidden="true"></div>
-        <p class="authors">Jiaxin Lin · Xiao Pan · Hangjie Yuan · Luyan Liang · Wan Li · Daquan Feng</p>
-        <p class="affiliations">Digital Creative Technology Laboratory, Shenzhen University<br>Zhejiang University</p>
-        <div class="status" role="status">
-          <span class="status-dot" aria-hidden="true"></span>
-          <span>Coming soon</span>
-        </div>
-        <p class="status-note">We are preparing this project page. Please check back for updates.</p>
+  <main>
+    <header class="paper-header">
+      <h1>SewFusion: Tailored Generation of Topology and Panel-Level Geometry for Sewing Patterns</h1>
+
+      <div class="authors" aria-label="Authors">
+        <span>Jiaxin Lin<sup>1</sup></span>
+        <span>Xiao Pan<sup>1</sup></span>
+        <span>Hangjie Yuan<sup>2</sup></span>
+        <span>Luyan Liang<sup>1</sup></span>
+        <span>Wan Li<sup>1</sup></span>
+        <span>Daquan Feng<sup>1</sup></span>
       </div>
-      <div class="pattern" aria-hidden="true">
-        <div class="pattern-sheet pattern-sheet-back"></div>
-        <div class="pattern-sheet pattern-sheet-front">
-          <span class="pattern-line pattern-line-one"></span>
-          <span class="pattern-line pattern-line-two"></span>
-          <span class="pattern-line pattern-line-three"></span>
-          <span class="pattern-point pattern-point-one"></span>
-          <span class="pattern-point pattern-point-two"></span>
-          <span class="pattern-point pattern-point-three"></span>
-        </div>
-        <div class="pattern-caption">Topology <span>×</span> Panel geometry</div>
+
+      <p class="affiliations"><sup>1</sup>Shenzhen University &nbsp;&nbsp; <sup>2</sup>Zhejiang University</p>
+
+      <div class="links">
+        <a href="static/pdfs/sewfusion.pdf" target="_blank" rel="noopener">Paper</a>
+        <a href="#video">Video</a>
+        <a href="#citation">BibTeX</a>
       </div>
-    </div>
-    <footer>
-      <span>© SewFusion</span>
-      <span>Page adapted from the <a href="https://github.com/eliahuhorwitz/Academic-project-page-template">Academic Project Page Template</a>.</span>
-    </footer>
+    </header>
+
+    <section class="teaser">
+      <img src="static/images/teaser_html.svg" alt="SewFusion supports image-, text-, and image-text-based generation and sewing pattern editing.">
+      <p><strong>SewFusion</strong> generates simulation-ready sewing patterns from images, text, or their combination, and edits existing patterns according to natural-language instructions.</p>
+    </section>
+
+    <section>
+      <h2>Abstract</h2>
+      <p>Generating sewing patterns from images and text requires modeling a heterogeneous representation composed of discrete topology and continuous geometry. Existing diffusion-based methods enable holistic geometry generation by converting the entire pattern into a continuous representation, but weaken discrete topology modeling. Autoregressive methods preserve discrete topology through next-token prediction, but tie continuous geometry regression to token-level hidden states with limited panel-level context. We propose SewFusion, a unified autoregressive framework that adopts tailored generation mechanisms for discrete topology and panel-level continuous geometry, using next-token prediction for the former and flow matching for the latter. A Panel Geometry VAE learns a fixed-size latent space for variable-length panel geometry, while Panel-Forcing reduces the training-inference mismatch and improves robustness to topology prediction errors. Experiments on SewFactory and GCD-MM demonstrate consistent improvements across image-, text-, and image-text-based generation, as well as sewing pattern editing.</p>
+    </section>
+
+    <section>
+      <h2>Method</h2>
+      <p>SewFusion first generates the discrete topology of a sewing pattern through next-token prediction. Conditioned on the multimodal input and generated topology, Panel Geometry Flow then produces panel-level continuous geometry in the latent space learned by the Panel Geometry VAE.</p>
+      <figure>
+        <img src="static/images/figures/pipeline.svg" alt="Overview of the SewFusion framework.">
+        <figcaption>Overview of SewFusion. The framework combines token-level topology generation with flow-based panel geometry generation and decodes the result into editable, simulation-ready sewing patterns.</figcaption>
+      </figure>
+    </section>
+
+    <section id="video">
+      <h2>Video Results</h2>
+      <p class="video-note">Each video compares four garments. From left to right: <strong>GT</strong>, <strong>SewFusion (Ours)</strong>, <strong>SewingLDM</strong>, and <strong>AIpparel</strong>.</p>
+      <div class="video-grid">
+        <figure>
+          <video controls autoplay muted loop playsinline preload="auto"><source src="static/videos/results/image-based-garment-generation.mp4" type="video/mp4"></video>
+          <figcaption>Image-based Garment Generation</figcaption>
+        </figure>
+        <figure>
+          <video controls autoplay muted loop playsinline preload="auto"><source src="static/videos/results/image-text-based-garment-generation.mp4" type="video/mp4"></video>
+          <figcaption>Image-Text-based Garment Generation</figcaption>
+        </figure>
+        <figure>
+          <video controls autoplay muted loop playsinline preload="auto"><source src="static/videos/results/text-based-garment-generation.mp4" type="video/mp4"></video>
+          <figcaption>Text-based Garment Generation</figcaption>
+        </figure>
+        <figure>
+          <video controls autoplay muted loop playsinline preload="auto"><source src="static/videos/results/garment-editing.mp4" type="video/mp4"></video>
+          <figcaption><strong>Garment Editing</strong><span>“Switch the collar type from trapezoid collar to twisted collar”</span></figcaption>
+        </figure>
+        <figure>
+          <video controls autoplay muted loop playsinline preload="auto"><source src="static/videos/results/textured-garment-generation-1.mp4" type="video/mp4"></video>
+          <figcaption>Textured Garment Generation</figcaption>
+        </figure>
+        <figure>
+          <video controls autoplay muted loop playsinline preload="auto"><source src="static/videos/results/textured-garment-generation-2.mp4" type="video/mp4"></video>
+          <figcaption>Textured Garment Generation</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section>
+      <h2>Results</h2>
+
+      <h3>Image-based Generation</h3>
+      <figure>
+        <img loading="lazy" src="static/images/figures/exper_image_generation.png" alt="Image-based sewing pattern generation results.">
+        <figcaption>SewFusion better recovers garment structure, small panels, and stitch relations from rendered images.</figcaption>
+      </figure>
+
+      <h3>Text-based Generation</h3>
+      <figure>
+        <img loading="lazy" src="static/images/figures/text_example_v2.png" alt="Text-based sewing pattern generation results.">
+        <figcaption>SewFusion follows textual descriptions of garment length, neckline, sleeves, and overall style.</figcaption>
+      </figure>
+
+      <h3>Image-Text-based Generation</h3>
+      <figure>
+        <img loading="lazy" src="static/images/figures/text_image_example_v2.png" alt="Image-text-based sewing pattern generation results.">
+        <figcaption>Combining visual and textual conditions improves alignment with fine-grained garment details.</figcaption>
+      </figure>
+
+      <h3>Sewing Pattern Editing</h3>
+      <figure>
+        <img loading="lazy" src="static/images/figures/edit_example.png" alt="Instruction-based sewing pattern editing results.">
+        <figcaption>SewFusion performs targeted edits while preserving the unmodified regions of the source garment.</figcaption>
+      </figure>
+    </section>
+
+    <section id="citation">
+      <h2>BibTeX</h2>
+      <div class="citation-box">
+        <pre><code id="bibtex">@article{lin2027sewfusion,
+  title  = {SewFusion: Tailored Generation of Topology and Panel-Level Geometry for Sewing Patterns},
+  author = {Lin, Jiaxin and Pan, Xiao and Yuan, Hangjie and Liang, Luyan and Li, Wan and Feng, Daquan},
+  year   = {2027}
+}</code></pre>
+        <button type="button" data-copy-target="bibtex">Copy</button>
+      </div>
+    </section>
   </main>
+
+  <footer>
+    <p>SewFusion · Shenzhen University · Zhejiang University</p>
+  </footer>
+  <script src="static/js/index.js"></script>
 </body>
 </html>
